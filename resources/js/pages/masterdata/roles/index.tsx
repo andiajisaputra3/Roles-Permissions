@@ -11,6 +11,7 @@ import ActionsForm from './actions-form'
 import DialogEdit from '@/components/ui/dialog-edit'
 import DialogDelete from '@/components/ui/dialog-delete'
 import { toast } from 'sonner'
+import { Role } from '@/types/role-permission'
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -18,14 +19,6 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: '/masterdata/roles/index'
     }
 ]
-
-export type Role = {
-    id: number
-    name: string
-    guard_name: string
-    created_at: string
-    updated_at: string
-}
 
 export default function Index() {
 

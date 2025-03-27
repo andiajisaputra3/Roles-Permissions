@@ -14,9 +14,11 @@ interface DataTableRowActionsProps<TData> {
     row: Row<TData>;
     onEdit?: (value: TData) => void;
     onDelete?: (value: TData) => void;
+    isEditActive?: boolean;
+    isDeleteActive?: boolean;
 }
 
-export default function DataTableRowActions<TData>({ row, onEdit, onDelete }: DataTableRowActionsProps<TData>) {
+export default function DataTableRowActions<TData>({ row, onEdit, onDelete, isEditActive = true, isDeleteActive = true }: DataTableRowActionsProps<TData>) {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -28,14 +30,18 @@ export default function DataTableRowActions<TData>({ row, onEdit, onDelete }: Da
             <DropdownMenuContent align="end">
                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className='cursor-pointer' onClick={() => onEdit?.(row.original)}>
-                    <Edit />
-                    Edit
-                </DropdownMenuItem>
-                <DropdownMenuItem className='cursor-pointer' onClick={() => onDelete?.(row.original)}>
-                    <Trash2 />
-                    Delete
-                </DropdownMenuItem>
+                {isEditActive && (
+                    <DropdownMenuItem className='cursor-pointer' onClick={() => onEdit?.(row.original)}>
+                        <Edit />
+                        Edit
+                    </DropdownMenuItem>
+                )}
+                {isDeleteActive && (
+                    <DropdownMenuItem className='cursor-pointer' onClick={() => onDelete?.(row.original)}>
+                        <Trash2 />
+                        Delete
+                    </DropdownMenuItem>
+                )}
             </DropdownMenuContent>
         </DropdownMenu>
     )

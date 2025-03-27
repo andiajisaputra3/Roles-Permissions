@@ -13,3 +13,9 @@ export type Permission = {
     created_at: string;
     updated_at: string;
 };
+
+export type RoleManagement = {
+    id: number;
+    name: string;
+    permissions: Permission[];
+};

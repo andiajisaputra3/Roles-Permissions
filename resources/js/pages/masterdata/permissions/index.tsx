@@ -11,6 +11,7 @@ import DialogAdd from '@/components/ui/dialog-add'
 import DialogEdit from '@/components/ui/dialog-edit'
 import DialogDelete from '@/components/ui/dialog-delete'
 import ActionsForm from './actions-form'
+import { Permission } from '@/types/role-permission'
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -18,14 +19,6 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: '/masterdata/permissions/index'
     }
 ]
-
-export type Permission = {
-    id: number
-    name: string
-    guard_name: string
-    created_at: string
-    updated_at: string
-}
 
 export default function Index() {
 

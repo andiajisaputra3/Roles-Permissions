@@ -31,7 +31,7 @@ interface DataTableProps<TData, TValue> {
     data: TData[]
     placeholder: string
     filterSearch: string
-    children: React.ReactNode
+    children?: React.ReactNode
 }
 
 export function DataTable<TData, TValue>({
