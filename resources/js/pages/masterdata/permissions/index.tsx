@@ -41,7 +41,7 @@ export default function Index() {
     const handleDeleteSubmit = () => {
         if (!selectedPermission) return;
 
-        router.delete(route('permission.destroy', selectedPermission.id), {
+        router.delete(route('permissions.destroy', selectedPermission.id), {
             onSuccess: () => {
                 toast.success("Permission deleted successfully!");
                 setOpenDeleteDialog(false)

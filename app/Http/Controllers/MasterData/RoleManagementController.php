@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\MasterData;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MasterData\RoleManagement\UpdateRoleManagementRequest;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Permission;
@@ -21,8 +22,12 @@ class RoleManagementController extends Controller
         ]);
     }
 
-    public function update(Request $request, string $id)
+    public function update(UpdateRoleManagementRequest $request, string $id)
     {
-        //
+        $role = Role::findOrFail($id);
+
+        $role->syncPermissions($request->validated()['permissions']);
+
+        return to_route('role-management.index');
     }
 }

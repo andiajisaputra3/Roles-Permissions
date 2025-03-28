@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\MasterData;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MasterData\Permission\StorePermissionRequest;
+use App\Http\Requests\MasterData\Permission\UpdatePermissionRequest;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Permission;
@@ -14,7 +16,7 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        $permissions = Permission::all();
+        $permissions = Permission::orderBy('created_at', 'desc')->get();
 
         return Inertia::render('masterdata/permissions/index', [
             'permissions' => $permissions
@@ -32,9 +34,11 @@ class PermissionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StorePermissionRequest $request)
     {
-        //
+        Permission::create($request->validated());
+
+        return to_route('permissions.index');
     }
 
     /**
@@ -56,9 +60,12 @@ class PermissionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdatePermissionRequest $request, string $id)
     {
-        //
+        $permission = Permission::findOrFail($id);
+        $permission->update($request->validated());
+
+        return to_route('permissions.index');
     }
 
     /**
@@ -66,6 +73,9 @@ class PermissionController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $permission = Permission::findOrFail($id);
+        $permission->delete();
+
+        return to_route('permissions.index');
     }
 }

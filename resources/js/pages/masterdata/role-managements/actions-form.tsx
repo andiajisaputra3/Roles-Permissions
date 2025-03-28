@@ -4,9 +4,9 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { assignRoleManagementSchema } from "@/pages/schemas/role-permission-schema";
-import { RoleManagement } from "@/types/role-permission";
+import { Permission, RoleManagement } from "@/types/role-permission";
 import { useState } from "react";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel } from "@/components/ui/form";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { router } from "@inertiajs/react";
@@ -18,10 +18,11 @@ type AssignForm = z.infer<typeof assignRoleManagementSchema>
 
 interface RoleManagementProps {
     roleManagement: RoleManagement | null
+    permissions: Permission[]
     onClose: (open: boolean) => void
 }
 
-export default function ActionsForm({ roleManagement, onClose }: RoleManagementProps) {
+export default function ActionsForm({ roleManagement, permissions, onClose }: RoleManagementProps) {
 
     const [loading, setLoading] = useState(false);
 
@@ -42,15 +43,15 @@ export default function ActionsForm({ roleManagement, onClose }: RoleManagementP
 
         setLoading(true);
 
-        router.put(route('role-managements.update', roleManagement?.id), data, {
+        router.post(route('role-management.update', roleManagement?.id), data, {
             onSuccess: () => {
                 toast.success("Permission added successfully!");
                 form.reset();
                 onClose(false);
             },
             onError: (errors) => {
-                if (errors.permissions) {
-                    toast.error(errors.permissions)
+                if (errors.name) {
+                    toast.error(errors.name)
                 } else {
                     toast.error('An error occurred when adding permission to the role!')
                 }
@@ -76,11 +77,11 @@ export default function ActionsForm({ roleManagement, onClose }: RoleManagementP
                         <div className="mb-4">
                             <FormLabel className="text-base">Permissions</FormLabel>
                             <FormDescription>
-                                <p>Assign permissions to the role.</p>
-                                <p>Select at least 1 permission.</p>
+                                <span>Assign permissions to the role.</span>
+                                <span>Select at least 1 permission.</span>
                             </FormDescription>
-                            <div className="flex mt-2">
-                                {roleManagement?.permissions?.map(permission => (
+                            <div className="flex mt-2 mb-4">
+                                {permissions?.map(permission => (
                                     <FormField key={permission.id} control={form.control} name="permissions" render={({ field }) => {
                                         return (
                                             <FormItem key={permission.id} className="w-full flex flex-row items-center space-y-0">
@@ -94,11 +95,13 @@ export default function ActionsForm({ roleManagement, onClose }: RoleManagementP
                                                     />
                                                 </FormControl>
                                                 <FormLabel>{permission.name}</FormLabel>
+
                                             </FormItem>
                                         )
                                     }} />
                                 ))}
                             </div>
+                            <FormMessage />
                         </div>
                     </FormItem>
                 )} />

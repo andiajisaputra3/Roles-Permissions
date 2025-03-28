@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\MasterData;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MasterData\Role\StoreRoleRequest;
+use App\Http\Requests\MasterData\Role\UpdateRoleRequest;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Role;
@@ -14,7 +16,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::all();
+        $roles = Role::orderBy('created_at', 'desc')->get();
 
         return Inertia::render('masterdata/roles/index', [
             'roles' => $roles
@@ -32,9 +34,11 @@ class RoleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRoleRequest $request)
     {
-        //
+        Role::create($request->validated());
+
+        return to_route('roles.index');
     }
 
     /**
@@ -56,9 +60,12 @@ class RoleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateRoleRequest $request, string $id)
     {
-        //
+        $role = Role::findOrFail($id);
+        $role->update($request->validated());
+
+        return to_route('roles.index');
     }
 
     /**
@@ -66,6 +73,9 @@ class RoleController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $role = Role::findOrFail($id);
+        $role->delete();
+
+        return to_route('roles.index');
     }
 }

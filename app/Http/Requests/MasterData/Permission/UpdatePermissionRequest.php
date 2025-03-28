@@ -11,7 +11,7 @@ class UpdatePermissionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,8 +21,9 @@ class UpdatePermissionRequest extends FormRequest
      */
     public function rules(): array
     {
+        $id = $this->route('id');
         return [
-            //
+            'name' => 'required|string|min:3|max:15|unique:permissions,name,' . ($id ?? 'NULL'),
         ];
     }
 }

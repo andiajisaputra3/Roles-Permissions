@@ -35,7 +35,8 @@ export default function ActionsForm({ role, onClose }: RoleFormProps) {
         resolver: zodResolver(roleSchema),
         defaultValues: {
             name: role?.name ?? ""
-        }
+        },
+        mode: "onSubmit",
     })
 
     function onSubmit(data: z.infer<typeof roleSchema>) {

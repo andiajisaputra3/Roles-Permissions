@@ -4,7 +4,7 @@ import { BreadcrumbItem } from '@/types'
 import { Head, usePage } from '@inertiajs/react'
 import { useCallback, useMemo, useState } from 'react'
 import { GetRoleManagementColumns } from './columns'
-import { RoleManagement } from '@/types/role-permission'
+import { Permission, RoleManagement } from '@/types/role-permission'
 import DialogEdit from '@/components/ui/dialog-edit'
 import ActionsForm from './actions-form'
 
@@ -17,7 +17,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 export default function Index() {
 
-    const { roles } = usePage<{ roles: RoleManagement[] }>().props;
+    const { roles, permissions } = usePage<{ roles: RoleManagement[]; permissions: Permission[] }>().props;
     const [selectedRoleManagement, setSelectedRoleManagement] = useState<RoleManagement | null>(null);
     const [openDialog, setOpenDialog] = useState(false);
 
@@ -45,7 +45,7 @@ export default function Index() {
             {/* Dialog Add/Edit */}
             {selectedRoleManagement && (
                 <DialogEdit open={openDialog} setOpen={setOpenDialog} title='permission'>
-                    <ActionsForm roleManagement={selectedRoleManagement} onClose={setOpenDialog} />
+                    <ActionsForm roleManagement={selectedRoleManagement} permissions={permissions} onClose={setOpenDialog} />
                 </DialogEdit>
             )}
         </AppLayout>

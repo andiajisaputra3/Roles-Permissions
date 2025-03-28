@@ -15,7 +15,7 @@ export const sidebarMenuItems: NavItem[] = [
             { title: 'Roles', url: '/masterdata/roles' },
             { title: 'Permissions', url: '/masterdata/permissions' },
             { title: 'Role Managements', url: '/masterdata/role-managements' },
-            { title: 'User Managenments', url: '/masterdata/usermanagements' },
+            { title: 'User Managenments', url: '/masterdata/user-managements' },
         ],
     },
 ];

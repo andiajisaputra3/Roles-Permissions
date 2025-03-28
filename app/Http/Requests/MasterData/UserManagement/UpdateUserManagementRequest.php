@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests\MasterData\Role;
+namespace App\Http\Requests\MasterData\UserManagement;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRoleRequest extends FormRequest
+class UpdateUserManagementRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -22,7 +22,7 @@ class StoreRoleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|min:3|max:15|unique:roles,name',
+            //
         ];
     }
 }
