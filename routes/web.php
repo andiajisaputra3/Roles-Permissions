@@ -19,9 +19,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('masterdata/roles', RoleController::class);
     Route::resource('masterdata/permissions', PermissionController::class);
     Route::get('masterdata/role-managements', [RoleManagementController::class, 'index'])->name('role-management.index');
-    Route::post('masterdata/role-managements/{id}', [RoleManagementController::class, 'update'])->name('role-management.update');
+    Route::put('masterdata/role-managements/{id}', [RoleManagementController::class, 'update'])->name('role-management.update');
     Route::get('masterdata/user-managements', [UserManagementController::class, 'index'])->name('user-management.index');
-    Route::post('masterdata/user-managements/{id}', [UserManagementController::class, 'update'])->name('user-management.update');
+    Route::put('masterdata/user-managements/{id}', [UserManagementController::class, 'update'])->name('user-management.update');
 });
 
 require __DIR__ . '/settings.php';

@@ -2,14 +2,14 @@
 
 import { DataTableColumnHeader } from "@/components/ui/data-table-column-header"
 import DataTableRowActions from "@/components/ui/data-table-row-actions"
-import { RoleManagement } from "@/types/role-permission"
+import { UserManagement } from "@/types/role-permission"
 import { ColumnDef } from "@tanstack/react-table"
 
-interface RoleManagementProps {
-    onEdit?: (value: RoleManagement) => void
+interface UserManagementProps {
+    onEdit: (value: UserManagement) => void
 }
 
-export const GetRoleManagementColumns = ({ onEdit }: RoleManagementProps): ColumnDef<RoleManagement>[] => [
+export const GetUserManagmentColumns = ({ onEdit }: UserManagementProps): ColumnDef<UserManagement>[] => [
     {
         id: "no",
         header: () => <span>No</span>,
@@ -21,19 +21,18 @@ export const GetRoleManagementColumns = ({ onEdit }: RoleManagementProps): Colum
         accessorKey: "name",
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Name" />
-        ),
+        )
     },
     {
-        accessorKey: "permissions",
+        accessorKey: "roles",
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Permission" />
+            <DataTableColumnHeader column={column} title="Roles" />
         ),
         cell: ({ row }) => {
-            const permission = row.original.permissions;
+            const role = row.original.roles;
             return (
                 <span>
-                    {/* {permission.length > 0 ? permission?.map((p) => p.name).join(", ") : "No permissions assigned"} */}
-                    {permission && permission.length > 0 ? permission.map((permis) => (permis.name)).join(", ") : "No permissions assigned"}
+                    {role && role.length > 0 ? role.map((role) => role.name).join(", ") : "No role assigned"}
                 </span>
             )
         }
@@ -43,6 +42,7 @@ export const GetRoleManagementColumns = ({ onEdit }: RoleManagementProps): Colum
         enableHiding: false,
         cell: ({ row }) => (
             <DataTableRowActions row={row} onEdit={onEdit} isDeleteActive={false} />
-        ),
-    },
+        )
+    }
+
 ]

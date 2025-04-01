@@ -26,7 +26,7 @@ class RoleManagementController extends Controller
     {
         $role = Role::findOrFail($id);
 
-        $role->syncPermissions($request->validated()['permissions']);
+        $role->syncPermissions($request->input('permissions', []));
 
         return to_route('role-management.index');
     }

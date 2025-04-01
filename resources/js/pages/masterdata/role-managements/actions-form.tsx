@@ -30,7 +30,7 @@ export default function ActionsForm({ roleManagement, permissions, onClose }: Ro
         resolver: zodResolver(assignRoleManagementSchema),
         defaultValues: {
             id: roleManagement?.id ?? 0,
-            permissions: roleManagement?.permissions.map(permission => permission.id)
+            permissions: roleManagement?.permissions.map(permission => permission.id) ?? []
         }
     });
 
@@ -43,7 +43,7 @@ export default function ActionsForm({ roleManagement, permissions, onClose }: Ro
 
         setLoading(true);
 
-        router.post(route('role-management.update', roleManagement?.id), data, {
+        router.put(route('role-management.update', roleManagement?.id), data, {
             onSuccess: () => {
                 toast.success("Permission added successfully!");
                 form.reset();
@@ -95,7 +95,6 @@ export default function ActionsForm({ roleManagement, permissions, onClose }: Ro
                                                     />
                                                 </FormControl>
                                                 <FormLabel>{permission.name}</FormLabel>
-
                                             </FormItem>
                                         )
                                     }} />

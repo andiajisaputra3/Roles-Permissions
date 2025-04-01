@@ -16,3 +16,10 @@ export const assignRoleManagementSchema = z.object({
         message: 'You have to select at least 1 permission.',
     }),
 });
+
+export const assignUserManagementSchema = z.object({
+    id: z.number().optional(),
+    roles: z.array(z.number()).refine((value) => value.some((item) => item), {
+        message: 'You have to select at least 1 role.',
+    }),
+});

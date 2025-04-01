@@ -19,3 +19,9 @@ export type RoleManagement = {
     name: string;
     permissions: Permission[];
 };
+
+export type UserManagement = {
+    id: number;
+    name: string;
+    roles: Roles[];
+};
