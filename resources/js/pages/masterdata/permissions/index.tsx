@@ -12,6 +12,7 @@ import DialogEdit from '@/components/ui/dialog-edit'
 import DialogDelete from '@/components/ui/dialog-delete'
 import ActionsForm from './actions-form'
 import { Permission } from '@/types/role-permission'
+import useRolePermission from '@/hooks/use-role-permission'
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -27,6 +28,7 @@ export default function Index() {
     const [openAddDialog, setOpenAddDialog] = useState(false);
     const [openEditDialog, setOpenEditDialog] = useState(false);
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+    const { hasPermission } = useRolePermission();
 
     const handleEditDialog = useCallback((permissions: Permission) => {
         setSelectedPermission(permissions);
@@ -68,29 +70,33 @@ export default function Index() {
                 <div className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border md:min-h-min">
                     <div className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20">
                         <DataTable columns={columns} data={permissions} placeholder='Search name...' filterSearch="name">
-                            <Button variant="outline" className='lg:h-8' onClick={() => { setOpenAddDialog(true) }}>
-                                <PlusCircle />
-                                Add new
-                            </Button>
+                            {hasPermission('create masterdata') && (
+                                <Button variant="outline" className='lg:h-8' onClick={() => { setOpenAddDialog(true) }}>
+                                    <PlusCircle />
+                                    Add new
+                                </Button>
+                            )}
                         </DataTable>
                     </div>
                 </div>
             </div>
 
             {/* Dialog Add */}
-            <DialogAdd open={openAddDialog} setOpen={setOpenAddDialog} title="permission">
-                <ActionsForm permission={null} onClose={setOpenAddDialog} />
-            </DialogAdd>
+            {hasPermission('create masterdata') && (
+                <DialogAdd open={openAddDialog} setOpen={setOpenAddDialog} title="permission">
+                    <ActionsForm permission={null} onClose={setOpenAddDialog} />
+                </DialogAdd>
+            )}
 
             {/* Dialog Edit */}
-            {selectedPermission && (
+            {hasPermission('update masterdata') && selectedPermission && (
                 <DialogEdit open={openEditDialog} setOpen={setOpenEditDialog} title='permission'>
                     <ActionsForm permission={selectedPermission} onClose={setOpenEditDialog} />
                 </DialogEdit>
             )}
 
             {/* Dialog Delete */}
-            {selectedPermission && (
+            {hasPermission('delete masterdata') && selectedPermission && (
                 <DialogDelete open={openDeleteDialog} setOpen={setOpenDeleteDialog} title={selectedPermission.name} onDelete={handleDeleteSubmit} />
             )}
         </AppLayout>

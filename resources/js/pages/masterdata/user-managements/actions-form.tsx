@@ -75,6 +75,7 @@ export default function ActionsForm({ userManagement, roles, onClose }: UserMana
                             <FormLabel>Roles</FormLabel>
                             <FormDescription>
                                 <span>Assign roles to the user.</span>
+                                <br />
                                 <span>Select at least 1 role.</span>
                             </FormDescription>
                             <div className="flex mt-2 mb-4 gap-3">

@@ -7,7 +7,7 @@ export const roleSchema = z.object({
 
 export const permissionSchema = z.object({
     id: z.number().optional(),
-    name: z.string().min(3, { message: 'Name must be at least 3 characters long' }).max(25, { message: 'Name must be at most 15 characters long' }),
+    name: z.string().min(3, { message: 'Name must be at least 3 characters long' }).max(30, { message: 'Name must be at most 30 characters long' }),
 });
 
 export const assignRoleManagementSchema = z.object({

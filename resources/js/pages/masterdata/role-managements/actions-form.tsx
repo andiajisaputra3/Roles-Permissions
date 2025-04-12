@@ -78,9 +78,10 @@ export default function ActionsForm({ roleManagement, permissions, onClose }: Ro
                             <FormLabel className="text-base">Permissions</FormLabel>
                             <FormDescription>
                                 <span>Assign permissions to the role.</span>
+                                <br />
                                 <span>Select at least 1 permission.</span>
                             </FormDescription>
-                            <div className="flex mt-2 mb-4">
+                            <div className="grid grid-cols-3 gap-y-8 mt-2 mb-4">
                                 {permissions?.map(permission => (
                                     <FormField key={permission.id} control={form.control} name="permissions" render={({ field }) => {
                                         return (

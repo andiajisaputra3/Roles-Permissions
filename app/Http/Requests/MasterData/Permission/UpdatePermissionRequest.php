@@ -23,7 +23,7 @@ class UpdatePermissionRequest extends FormRequest
     {
         $id = $this->route('id');
         return [
-            'name' => 'required|string|min:3|max:15|unique:permissions,name,' . ($id ?? 'NULL'),
+            'name' => 'required|string|min:3|max:30|unique:permissions,name,' . ($id ?? 'NULL'),
         ];
     }
 }

@@ -42,7 +42,7 @@ export const GetRoleManagementColumns = ({ onEdit }: RoleManagementProps): Colum
         id: "actions",
         enableHiding: false,
         cell: ({ row }) => (
-            <DataTableRowActions row={row} onEdit={onEdit} isDeleteActive={false} />
+            <DataTableRowActions row={row} onEdit={onEdit} isDeleteActive={false} editPermission="update masterdata" />
         ),
     },
 ]

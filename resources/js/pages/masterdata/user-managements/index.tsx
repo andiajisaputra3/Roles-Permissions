@@ -7,6 +7,7 @@ import { Role, UserManagement } from '@/types/role-permission'
 import { DataTable } from '@/components/ui/data-table'
 import DialogEdit from '@/components/ui/dialog-edit'
 import ActionsForm from './actions-form'
+import useRolePermission from '@/hooks/use-role-permission'
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -20,6 +21,7 @@ export default function Index() {
     const { users, roles } = usePage<{ users: UserManagement[]; roles: Role[] }>().props;
     const [selectedUserManagement, setSelectedUserManagement] = useState<UserManagement | null>(null);
     const [openDialog, setOpenDialog] = useState(false);
+    const { hasPermission } = useRolePermission();
 
     const handleOpenDialog = useCallback((users: UserManagement) => {
         setSelectedUserManagement(users)
@@ -45,7 +47,7 @@ export default function Index() {
             </div>
 
             {/* Dialog Add/Edit */}
-            {selectedUserManagement && (
+            {hasPermission('update masterdata') && selectedUserManagement && (
                 <DialogEdit open={openDialog} setOpen={setOpenDialog} title='permission'>
                     <ActionsForm userManagement={selectedUserManagement} roles={roles} onClose={setOpenDialog} />
                 </DialogEdit>

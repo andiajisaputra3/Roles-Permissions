@@ -7,6 +7,7 @@ import { GetRoleManagementColumns } from './columns'
 import { Permission, RoleManagement } from '@/types/role-permission'
 import DialogEdit from '@/components/ui/dialog-edit'
 import ActionsForm from './actions-form'
+import useRolePermission from '@/hooks/use-role-permission'
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -20,13 +21,15 @@ export default function Index() {
     const { roles, permissions } = usePage<{ roles: RoleManagement[]; permissions: Permission[] }>().props;
     const [selectedRoleManagement, setSelectedRoleManagement] = useState<RoleManagement | null>(null);
     const [openDialog, setOpenDialog] = useState(false);
+    const { hasPermission } = useRolePermission();
 
     const handleOpenDialog = useCallback((roles: RoleManagement) => {
         setSelectedRoleManagement(roles)
         setOpenDialog(true);
     }, [])
 
-    const columns = useMemo(() => GetRoleManagementColumns({ onEdit: handleOpenDialog }), [handleOpenDialog])
+    const columns = useMemo(() => GetRoleManagementColumns({ onEdit: handleOpenDialog }), [handleOpenDialog]);
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Role Managements" />
@@ -43,7 +46,7 @@ export default function Index() {
             </div>
 
             {/* Dialog Add/Edit */}
-            {selectedRoleManagement && (
+            {hasPermission('update masterdata') && selectedRoleManagement && (
                 <DialogEdit open={openDialog} setOpen={setOpenDialog} title='permission'>
                     <ActionsForm roleManagement={selectedRoleManagement} permissions={permissions} onClose={setOpenDialog} />
                 </DialogEdit>

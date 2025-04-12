@@ -15,15 +15,21 @@ export interface NavGroup {
     items: NavItem[];
 }
 
+export interface NavSubItem {
+    title: string;
+    url: string;
+    permission?: string | string[];
+    role?: string | string[];
+}
+
 export interface NavItem {
     title: string;
     href: string;
     icon?: LucideIcon | null;
     isActive?: boolean;
-    subItems?: {
-        title: string;
-        url: string;
-    }[];
+    permission?: string | string[];
+    role?: string | string[];
+    subItems?: NavSubItem[];
 }
 
 export interface SharedData {
@@ -44,3 +50,15 @@ export interface User {
     updated_at: string;
     [key: string]: unknown; // This allows for additional properties...
 }
+
+export type AccessProps = {
+    auth: {
+        user: {
+            id: number;
+            name: string;
+            email: string;
+        };
+        roles: string[];
+        permissions: string[];
+    };
+};

@@ -53,7 +53,7 @@ export const GetPermissionColumns = ({ onEdit, onDelete }: PermissionColumnProps
         id: "actions",
         enableHiding: false,
         cell: ({ row }) => (
-            <DataTableRowActions row={row} onEdit={onEdit} onDelete={onDelete} />
+            <DataTableRowActions row={row} onEdit={onEdit} onDelete={onDelete} editPermission="update masterdata" deletePermission="delete masterdata" />
         ),
     },
 ]
